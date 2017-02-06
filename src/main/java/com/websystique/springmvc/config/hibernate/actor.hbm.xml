@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.websystique.springmvc.dto.Actor" table="actor"
+		catalog="appunti">
+		<id name="actor_id" type="java.lang.Integer">
+			<column name="actor_id" />
+			<generator class="identity" />
+		</id>
+		<property name="first_name" type="string">
+			<column name="first_name" length="40" not-null="true" />
+		</property>
+		<property name="last_name" type="string">
+			<column name="last_name" length="256" not-null="true" />
+		</property>
+	</class>
+</hibernate-mapping>
