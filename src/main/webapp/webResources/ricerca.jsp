@@ -85,6 +85,9 @@
 					</tr>
 				</thead>
 				<tbody>
+				
+				
+				
 					<tr ng-repeat="u in ctrl.actors">
 						<td><span ng-bind="u.actor_id"></span></td>
 						<td><span ng-bind="u.first_name"></span></td>
