@@ -1,15 +1,15 @@
 'use strict';
 
-angular.module('myApp').controller('ActorController', ['$scope', 'ActorService', '$location',function($scope, ActorService, $location) {
+angular.module('myApp').controller('ActorController', ['$scope', 'ActorService', '$location', function($scope, ActorService, $location) {
     var self = this;
     
     self.film={idFilm:null, filmName:'', genre:'' };
-    var film=[]
+    var film=[];
     self.actor={actor_id:null, first_name:'',last_name:'', film };
     self.actors=[];
 
 
-    
+    self.bootbox=bootbox;
     self.submit = submit;
     self.edit = edit;
     self.remove = remove;
@@ -19,6 +19,17 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
     self.fetchAllActors = fetchAllActors;
     
     var idDet = $location.search();
+    
+   function bootbox(){
+//	    bootbox.alert({
+//	        message: "This alert can be dismissed by clicking on the background!",
+//	        backdrop: true
+//	    });
+//	    
+	   bootbox.alert();
+	    console.log("apri bootbox inserimento film");
+   } 
+    
    function goEdit(id) {
         $location.path('edit/').search({param:id});
         
@@ -42,6 +53,7 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
              then(
             		 
             		 function(response){
+            			 
             			 self.actors=response;
             		 }
             		 
@@ -108,6 +120,7 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
     	ActorService.details(idDet)
         .then(
         		function(response){
+        			self.actor.film=response.film;
         			self.actor=response;
         		}
             );

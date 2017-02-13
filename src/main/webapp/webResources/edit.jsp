@@ -61,6 +61,11 @@
 									Form</button>
 								<input type="submit" value="Modifica"
 									class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
+								<button type="button" onclick="bootbox.alert('prova')"
+									class="btn btn-primary btn-sm">Assegna film</button>
+
+								<button class="btn btn-default"
+									ng-bootbox-alert="Alert message!">Alert</button>
 							</div>
 						</div>
 					</div>
@@ -68,7 +73,7 @@
 			</div>
 
 
-			<div ng-if="ctrl.films !=[]">
+			<div ng-if="ctrl.actor.film !=[]">
 				<div class="tablecontainer">
 					<table class="table table-hover">
 						<thead>
@@ -80,23 +85,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td><span ng-bind="ctrl.actor.film.idFilm"></span></td>
-								<td><span ng-bind="ctrl.actor.film.filmName"></span></td>
-								<td><span ng-bind="ctrl.actor.film.genre"></span></td>
+							<tr ng-repeat="u in ctrl.actor.film">
+								<td><span ng-bind="u.idFilm"></span></td>
+								<td><span ng-bind="u.filmName"></span></td>
+								<td><span ng-bind="u.genre"></span></td>
 							</tr>
-<!-- 							<tr ng-repeat="u in ctrl.actor">
-								<td><span ng-bind="u.film.idFilm"></span></td>
-								<td><span ng-bind="u.film.filmName"></span></td>
-								<td><span ng-bind="u.film.genre"></span></td>
-								<td>
-									<button ng-click="ctrl.goEdit()">dettaglio</button>
-									<button type="button" ng-click="ctrl.edit(u.actor_id)"
-										class="glyphicon glyphicon-pencil"></button>
-									<button type="button" ng-click="ctrl.remove(u.actor_id)"
-										class=" glyphicon glyphicon-trash"></button>
-								</td>
-							</tr> -->
+
 						</tbody>
 					</table>
 				</div>

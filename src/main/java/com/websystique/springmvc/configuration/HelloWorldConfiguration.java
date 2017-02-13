@@ -31,6 +31,7 @@ public class HelloWorldConfiguration extends WebMvcConfigurerAdapter{
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/static/**").addResourceLocations("/static/");
 		registry.addResourceHandler("/webResources/**").addResourceLocations("/webResources/");
+		registry.addResourceHandler("/bower_components/**").addResourceLocations("/bower_components/");
 	}
 	
 
