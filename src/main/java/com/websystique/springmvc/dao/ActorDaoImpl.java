@@ -20,6 +20,7 @@ public class ActorDaoImpl extends AbstractDao implements ActorDao {
 	@SuppressWarnings("unchecked")
 	public List<Actor> findAllActors() {
 		Criteria criteria = getSession().createCriteria(Actor.class);
+		
 		return (List<Actor>) criteria.list();
 	}
 

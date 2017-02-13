@@ -1,16 +1,29 @@
 package com.websystique.springmvc.model;
 
+import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import java.sql.Timestamp;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name="actor")
-public class Actor {
+public class Actor implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer actor_id;
@@ -20,7 +33,24 @@ public class Actor {
     private String last_name;
     @Column(name = "last_update", nullable = true)
 	private Timestamp last_update;
-    
+    @Transient
+    private List<Film> film;
+	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinTable(name="actor_film_rt", 
+	joinColumns = @JoinColumn(name = "actor_id",referencedColumnName="actor_id"),
+	inverseJoinColumns =  @JoinColumn(name = "id_film",referencedColumnName="id_film"))
+	@JsonIgnore
+    private Set<Film> films = new HashSet<Film>(0);
+
+	
+
+
+	public List<Film> getFilm() {
+		return film;
+	}
+	public void setFilm(List<Film> film) {
+		this.film = film;
+	}
 	public Integer getActor_id() {
 		return actor_id;
 	}
@@ -45,8 +75,12 @@ public class Actor {
 	public void setLast_update(Timestamp last_update) {
 		this.last_update = last_update;
 	}
-	
-	
-	
+	public Set<Film> getFilms() {
+		return films;
+	}
+	public void setFilms(Set<Film> films) {
+		this.films = films;
+	}
 
+	
 }

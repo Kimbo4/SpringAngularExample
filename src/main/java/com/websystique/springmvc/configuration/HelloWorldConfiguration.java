@@ -13,7 +13,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@EnableTransactionManagement
+@EnableTransactionManagement 
 @ComponentScan(basePackages = "com.websystique.springmvc")
 public class HelloWorldConfiguration extends WebMvcConfigurerAdapter{
 	

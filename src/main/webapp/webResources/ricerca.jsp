@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>	
+
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -59,8 +62,8 @@
 								class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">-->
 								<button type="button" ng-click="ctrl.reset()"
 									class="btn btn-warning btn-sm" ng-disabled="myForm.$pristine">Reset
-									
-									
+
+
 									Form</button>
 								<button type="button"
 									ng-click="ctrl.fetchAllActors(); ricerca=true"
@@ -74,36 +77,38 @@
 
 		<!-- TABELLA RICERCA -->
 
-		<div class="tablecontainer" ng-show="ricerca">
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>ID.</th>
-						<th>Nome</th>
-						<th>Cognome</th>
-						<th width="20%"></th>
-					</tr>
-				</thead>
-				<tbody>
-				
-				
-				
-					<tr ng-repeat="u in ctrl.actors">
-						<td><span ng-bind="u.actor_id"></span></td>
-						<td><span ng-bind="u.first_name"></span></td>
-						<td><span ng-bind="u.last_name"></span></td>
-						<td>
-							<!-- <button ng-click="ctrl.goEdit()">dettaglio</button> -->
-							<button type="button" ng-click="ctrl.edit(u.actor_id)"
-								class="glyphicon glyphicon-pencil"></button>
-							<button type="button" ng-click="ctrl.remove(u.actor_id)"
-								class=" glyphicon glyphicon-trash"></button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+			
+		<div ng-if="ctrl.actors !=[]">
+			<div class="tablecontainer" ng-show="ricerca">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>ID.</th>
+							<th>Nome</th>
+							<th>Cognome</th>
+							<th width="20%"></th>
+						</tr>
+					</thead>
+					<tbody>
 
+
+
+						<tr ng-repeat="u in ctrl.actors">
+							<td><span ng-bind="u.actor_id"></span></td>
+							<td><span ng-bind="u.first_name"></span></td>
+							<td><span ng-bind="u.last_name"></span></td>
+							<td>
+								<!-- <button ng-click="ctrl.goEdit()">dettaglio</button> -->
+								<button type="button" ng-click="ctrl.edit(u.actor_id)"
+									class="glyphicon glyphicon-pencil"></button>
+								<button type="button" ng-click="ctrl.remove(u.actor_id)"
+									class=" glyphicon glyphicon-trash"></button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

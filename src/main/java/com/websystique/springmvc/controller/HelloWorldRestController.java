@@ -1,7 +1,11 @@
 package com.websystique.springmvc.controller;
  
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -16,18 +20,39 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.websystique.springmvc.model.Actor;
-import com.websystique.springmvc.model.User;
+import com.websystique.springmvc.model.Film;
 import com.websystique.springmvc.service.ActorService;
-import com.websystique.springmvc.service.UserService;
+import com.websystique.springmvc.service.FilmService;
  
 @RestController
 public class HelloWorldRestController {
  
-    @Autowired
-    UserService userService;  //Service which will do all data retrieval/manipulation work
     
     @Autowired
     ActorService actorService;
+    
+    @Autowired
+    FilmService filmService;
+    
+    //-------------------Retrieve film--------------------------------------------------------
+    
+    @RequestMapping(value = "/film/", method = RequestMethod.GET)
+    public ResponseEntity<List<Film>> getFilms(   UriComponentsBuilder ucBuilder)  {
+        
+//        if (acto.isUserExist(user)) {
+//            System.out.println("A User with name " + user.getUsername() + " already exist");
+//            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+//        }
+    	
+    	
+      	List<Film> film=filmService.findAllFilm();       
+    	if(film.isEmpty()){
+            return new ResponseEntity<List<Film>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+        }
+        return new ResponseEntity<List<Film>>(film, HttpStatus.OK);
+   
+      }
+ 
  
     //-------------------Add a new Actor--------------------------------------------------------
     
@@ -85,6 +110,10 @@ public class HelloWorldRestController {
             System.out.println("Actor with id " + id + " not found");
             return new ResponseEntity<Actor>(HttpStatus.NOT_FOUND);
         }
+        Set<Film> setFilm = actor.getFilms();
+        List<Film> films = Arrays.asList(setFilm.toArray(new Film[0]));
+        actor.setFilm(films);
+        
         return new ResponseEntity<Actor>(actor, HttpStatus.OK);
     }
      
@@ -100,10 +129,19 @@ public class HelloWorldRestController {
             return new ResponseEntity<Actor>(HttpStatus.NOT_FOUND);
         }
         
+        
+       Set<Film> film = new HashSet<Film>();
+        
+        Film films = new Film();
+        films.setFilmName("lo squalo");
+        films.setGenre("horror");
+        
+        film.add(films);
+        
         currentActor.setFirst_name(actor.getFirst_name());
         currentActor.setLast_name(actor.getLast_name());
         currentActor.setLast_update(new Timestamp(System.currentTimeMillis()));
-
+        currentActor.setFilms(film);
         actorService.updateActor(currentActor);
         return new ResponseEntity<Actor>(currentActor, HttpStatus.OK);
     }
@@ -125,19 +163,5 @@ public class HelloWorldRestController {
         actorService.deleteActorBySsn(id);
         return new ResponseEntity<Actor>(HttpStatus.NO_CONTENT);
     }
- 
-     
-    
-    //------------------- Delete All Users --------------------------------------------------------
-     
-    @RequestMapping(value = "/actor/", method = RequestMethod.DELETE)
-    public ResponseEntity<User> deleteAllUsers() {
-        System.out.println("Deleting All Users");
-        userService.deleteAllUsers();
-        
-        return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
-    }
-    
 
- 
 }

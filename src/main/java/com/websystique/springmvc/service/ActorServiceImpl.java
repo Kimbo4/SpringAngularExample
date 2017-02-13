@@ -21,36 +21,36 @@ import com.websystique.springmvc.model.Actor;
 public class ActorServiceImpl implements ActorService {
 
 	@Autowired
-	private ActorDao dao;
+	private ActorDao actorDao;
 	
 	@Override
 	public void saveActor(Actor actor) {
-		dao.saveActor(actor);
+		actorDao.saveActor(actor);
 	}
 
 	@Override
 	public List<Actor> findAllActors() {
-		return dao.findAllActors();
+		return actorDao.findAllActors();
 	}
 
 	@Override
 	public void deleteActorBySsn(long ssn) {
-		dao.deleteActorBySsn(ssn);
+		actorDao.deleteActorBySsn(ssn);
 	}
 
 	@Override
 	public Actor findBySsn(Integer ssn) {
-		return dao.findBySsn(ssn);
+		return actorDao.findBySsn(ssn);
 	}
 
 	@Override
 	public void updateActor(Actor actor) {
-		dao.updateActor(actor);		
+		actorDao.updateActor(actor);		
 	}
 	
 	@Override
 	public List <Actor> findActors(Actor actor){
-		return dao.findActors(actor);
+		return actorDao.findActors(actor);
 	}
 
 

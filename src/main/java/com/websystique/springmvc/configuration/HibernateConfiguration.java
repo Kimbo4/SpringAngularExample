@@ -11,15 +11,20 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
  
 @Configuration
+@EnableTransactionManagement
 @ComponentScan({ "com.websystique.springmvc.configuration" })
 @PropertySource(value = { "classpath:application.properties" })
-public class HibernateConfiguration {
+public class HibernateConfiguration implements TransactionManagementConfigurer  {
  
     @Autowired
     private Environment environment;
@@ -57,5 +62,15 @@ public class HibernateConfiguration {
        HibernateTransactionManager txManager = new HibernateTransactionManager();
        txManager.setSessionFactory(s);
        return txManager;
+    }
+    
+    @Bean
+    public PlatformTransactionManager txManager() {
+        return new DataSourceTransactionManager(dataSource());
+    }
+    
+    @Override
+    public PlatformTransactionManager annotationDrivenTransactionManager() {
+        return txManager();
     }
 }

@@ -6,7 +6,8 @@
 </head>
 
 <body>
-	<div class="generic-container" ng-controller="ActorController as ctrl" data-ng-init="ctrl.details()">
+	<div class="generic-container" ng-controller="ActorController as ctrl"
+		data-ng-init="ctrl.details()">
 		<div class="panel panel-default">
 
 			<div class="formcontainer">
@@ -58,13 +59,47 @@
 								<button type="button" ng-click="ctrl.reset()"
 									class="btn btn-warning btn-sm" ng-disabled="myForm.$pristine">Reset
 									Form</button>
-								<input type="submit"
-									value="Modifica"
+								<input type="submit" value="Modifica"
 									class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
 							</div>
 						</div>
 					</div>
 				</form>
+			</div>
+
+
+			<div ng-if="ctrl.films !=[]">
+				<div class="tablecontainer">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>ID.</th>
+								<th>Film</th>
+								<th>Genere</th>
+								<th width="20%"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><span ng-bind="ctrl.actor.film.idFilm"></span></td>
+								<td><span ng-bind="ctrl.actor.film.filmName"></span></td>
+								<td><span ng-bind="ctrl.actor.film.genre"></span></td>
+							</tr>
+<!-- 							<tr ng-repeat="u in ctrl.actor">
+								<td><span ng-bind="u.film.idFilm"></span></td>
+								<td><span ng-bind="u.film.filmName"></span></td>
+								<td><span ng-bind="u.film.genre"></span></td>
+								<td>
+									<button ng-click="ctrl.goEdit()">dettaglio</button>
+									<button type="button" ng-click="ctrl.edit(u.actor_id)"
+										class="glyphicon glyphicon-pencil"></button>
+									<button type="button" ng-click="ctrl.remove(u.actor_id)"
+										class=" glyphicon glyphicon-trash"></button>
+								</td>
+							</tr> -->
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>

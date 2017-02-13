@@ -3,10 +3,13 @@
 angular.module('myApp').controller('ActorController', ['$scope', 'ActorService', '$location',function($scope, ActorService, $location) {
     var self = this;
     
-    self.actor={actor_id:null, first_name:'',last_name:''};
-    
+    self.film={idFilm:null, filmName:'', genre:'' };
+    var film=[]
+    self.actor={actor_id:null, first_name:'',last_name:'', film };
     self.actors=[];
 
+
+    
     self.submit = submit;
     self.edit = edit;
     self.remove = remove;
@@ -27,17 +30,23 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
              ActorService.fetchAllActors().
              then(
             		 
-            		 function(d){
-            			 self.actors=d;
-            		 })
-            
+            		 function(response){
+            			 self.actors=response;
+            		 },
+            		 function(responseError){
+            			 bootbox.alert("Nessun risultato trovato");
+            		 }
+             )
         }else{
         	 ActorService.findActor(self.actor).
              then(
-            		 function(d){
-            			 self.actors=d;
-            		 })
-            ;
+            		 
+            		 function(response){
+            			 self.actors=response;
+            		 }
+            		 
+             
+             );
         }
         reset();
     }
@@ -45,6 +54,8 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
     function createActor(actor){
     	ActorService.createActor(actor)
             .then(fetchAllActors,
+            		
+            		
             function(errResponse){
                 console.error('Error while creating User');
             }
@@ -96,8 +107,8 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
     	
     	ActorService.details(idDet)
         .then(
-        		function(d){
-        			self.actor=d;
+        		function(response){
+        			self.actor=response;
         		}
             );
     	console.log('ho chiamato il metodo del dettaglio');
