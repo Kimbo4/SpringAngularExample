@@ -1,13 +1,13 @@
 'use strict';
 
-angular.module('myApp').controller('ActorController', ['$scope', 'ActorService', '$location', function($scope, ActorService, $location) {
+angular.module('myApp').controller('ActorController', ['$scope', 'ActorService', '$location', '$ngBootbox', function($scope, ActorService, $location, $ngBootbox) {
     var self = this;
     
     self.film={idFilm:null, filmName:'', genre:'' };
     var film=[];
     self.actor={actor_id:null, first_name:'',last_name:'', film };
     self.actors=[];
-
+ 
 
     self.bootbox=bootbox;
     self.submit = submit;
@@ -17,19 +17,19 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
     self.reset = reset;
     self.goEdit = goEdit;
     self.fetchAllActors = fetchAllActors;
+    self.inserisciFilmm = inserisciFilm;
     
     var idDet = $location.search();
+
+    function bootbox(){
+    	$ngBootbox.alert("<embed src='webResources/newFilm.jsp'/>").then(function(result) {
+            console.log('Alert closed');
+        });
+    }
     
-   function bootbox(){
-//	    bootbox.alert({
-//	        message: "This alert can be dismissed by clicking on the background!",
-//	        backdrop: true
-//	    });
-//	    
-	   bootbox.alert();
-	    console.log("apri bootbox inserimento film");
-   } 
-    
+    function inserisciFilm(titolo,genere){
+    	self.film.filmName=titolo;
+    }
    function goEdit(id) {
         $location.path('edit/').search({param:id});
         

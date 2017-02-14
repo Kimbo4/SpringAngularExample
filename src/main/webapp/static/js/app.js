@@ -1,6 +1,6 @@
 'use strict';
 
-var App = angular.module('myApp',["ngRoute"])
+var App = angular.module('myApp',["ngRoute","ngBootbox"]);
 
 App.config(function($routeProvider) {
     $routeProvider

@@ -11,6 +11,7 @@
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootbox.min.js"></script>
+<script src="bower_components/ngBootbox/dist/ngBootbox.js"></script>
 
 <script src="static/js/app.js"></script>
 <script src="static/js/service/user_service.js"></script>
@@ -26,6 +27,10 @@
 	href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" />
 </head>
 
+
+<script>
+	
+</script>
 <body ng-app="myApp" class="ng-cloak">
 	<div class="generic-container" ng-controller="ActorController as ctrl">
 
