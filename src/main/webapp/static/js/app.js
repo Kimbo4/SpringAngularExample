@@ -9,7 +9,6 @@ App.config(function($routeProvider) {
     })    
     .when('/edit/', {
         templateUrl : 'webResources/edit.jsp',
-        controller : 'ActorController as ctrl'
     })
     .when('/new', {
         templateUrl : 'webResources/new.jsp'
