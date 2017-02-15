@@ -17,6 +17,7 @@
 <script src="../static/js/app.js"></script>
 <script src="../static/js/service/user_service.js"></script>
 <script src="../static/js/controller/user_controller.js"></script>
+<script src="../static/js/controller/film_controller.js"></script>
 
 
 <!-- Latest compiled and minified CSS -->
@@ -31,33 +32,28 @@
 </head>
 
 <body>
-	<div ng-controller="ActorController as ctrl">
-		<form ng-submit="ctrl.submit()" name="myForm">
-			<div class="container">
-				<div class="row">
-					<div class="form-group col-md-12">
-						<label class="col-md-2 control-lable" for="file">Titolo</label>
-						<div class="col-md-7">
-							<input type="text" ng-model="ctrl.film.filmName" name="titolo"
-								placeholder="Titolo film" required ng-minlength="3"
-								class="input-md" />
-						</div>
+	<form ng-submit="ctrl.submit()" name="myForm.form2">
+		<div class="container">
+			<div class="row">
+				<div class="form-group col-md-12">
 
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="form-group col-md-12">
-						<label class="col-md-2 control-lable" for="file">Genere</label>
-						<div class="col-md-7">
-							<input type="text" ng-model="ctrl.film.genre" name="genere"
-								placeholder="Genere" required ng-minlength="3" class="input-md" />
-						</div>
+					<div class="col-md-7">
+					
+						<label class="col-md-2 control-lable" for="file">Titolo</label> <input
+							type="text" ng-model="ctrl.film.filmName" name="titolo"
+							placeholder="Titolo film" required ng-minlength="3"
+							class="input-md" />
+							
+						<label class="control-lable" for="file">Genere</label>
+						
+						 <input
+							type="text" ng-model="ctrl.film.filmName" name="genere"
+							placeholder="Titolo film" required ng-minlength="3"
+							class="input-md" />
 					</div>
 				</div>
 			</div>
-		</form>
-	</div>
+	</form>
 </body>
 
 </html>

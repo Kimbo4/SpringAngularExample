@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Home</title>
 
 <script src="bower_components/angular/angular.js"></script>
@@ -16,6 +16,7 @@
 <script src="static/js/app.js"></script>
 <script src="static/js/service/user_service.js"></script>
 <script src="static/js/controller/user_controller.js"></script>
+<script src="static/js/controller/film_controller.js"></script>
 
 
 <!-- Latest compiled and minified CSS -->

@@ -5,7 +5,7 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
     
     self.film={idFilm:null, filmName:'', genre:'' };
     var film=[];
-    self.actor={actor_id:null, first_name:'',last_name:'', film };
+    self.actor={actor_id:null, first_name:'',last_name:''};
     self.actors=[];
  
 
@@ -21,7 +21,7 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
     
     var idDet = $location.search();
 
-    function bootbox(){
+	function bootbox(){
     	$ngBootbox.alert("<embed src='webResources/newFilm.jsp'/>").then(function(result) {
             console.log('Alert closed');
         });
