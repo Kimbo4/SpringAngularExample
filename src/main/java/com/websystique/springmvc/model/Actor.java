@@ -20,67 +20,74 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 @Entity
-@Table(name="actor")
+@Table(name = "attore")
 public class Actor implements java.io.Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "idATTORE")
 	private Integer actor_id;
-    @Column(name = "first_name", nullable = false)
+	@Column(name = "NOMEATTORE", nullable = false)
 	private String first_name;
-    @Column(name = "last_name", nullable = false)
-    private String last_name;
-    @Column(name = "last_update", nullable = true)
+	@Column(name = "COGNOMEATTORE", nullable = false)
+	private String last_name;
+	@Column(name = "LASTUPDATE", nullable = true)
 	private Timestamp last_update;
-    @Transient
-    private List<Film> film;
-	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinTable(name="actor_film_rt", 
-	joinColumns = @JoinColumn(name = "actor_id",referencedColumnName="actor_id"),
-	inverseJoinColumns =  @JoinColumn(name = "id_film",referencedColumnName="id_film"))
-	@JsonIgnore
-    private Set<Film> films = new HashSet<Film>(0);
-
 	
+	@Transient 
+	private List<Film> film;
 
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "attore_film", joinColumns = @JoinColumn(name = "idATTORE"), inverseJoinColumns = @JoinColumn(name = "idFILM"))
+	@JsonIgnore
+	private Set<Film> films = new HashSet<Film>(0);
 
-	public List<Film> getFilm() {
-		return film;
-	}
-	public void setFilm(List<Film> film) {
-		this.film = film;
-	}
 	public Integer getActor_id() {
 		return actor_id;
 	}
+
 	public void setActor_id(Integer actor_id) {
 		this.actor_id = actor_id;
 	}
+
 	public String getFirst_name() {
 		return first_name;
 	}
+
 	public void setFirst_name(String first_name) {
 		this.first_name = first_name;
 	}
+
 	public String getLast_name() {
 		return last_name;
 	}
+
 	public void setLast_name(String last_name) {
 		this.last_name = last_name;
 	}
+
 	public Timestamp getLast_update() {
 		return last_update;
 	}
+
 	public void setLast_update(Timestamp last_update) {
 		this.last_update = last_update;
 	}
+
 	public Set<Film> getFilms() {
 		return films;
 	}
+
 	public void setFilms(Set<Film> films) {
 		this.films = films;
 	}
 
-	
+	public List<Film> getFilm() {
+		return film;
+	}
+
+	public void setFilm(List<Film> film) {
+		this.film = film;
+	}
+
 }

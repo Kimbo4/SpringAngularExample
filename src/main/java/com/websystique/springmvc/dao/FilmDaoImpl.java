@@ -32,7 +32,7 @@ public class FilmDaoImpl extends AbstractDao implements FilmDao {
 
 	@Override
 	public void deleteFilm(int id) {
-		Query query = getSession().createSQLQuery("delete from Film where if_film = :id");
+		Query query = getSession().createSQLQuery("delete from Film where idFILM = :id");
 		query.setInteger("id", id);
 		query.executeUpdate();
 	}
@@ -40,13 +40,13 @@ public class FilmDaoImpl extends AbstractDao implements FilmDao {
 	@Override
 	public Film findById(Integer id) {
 		Criteria criteria = getSession().createCriteria(Film.class);
-		criteria.add(Restrictions.eq("id_film", id));
-		return (Film) criteria.uniqueResult();	
+		criteria.add(Restrictions.eq("idFilm", id));
+		return (Film) criteria.uniqueResult();
 	}
 
 	@Override
 	public void updateFilm(Film film) {
-		getSession().update(film);	
+		getSession().saveOrUpdate(film);	
 	}
 
 

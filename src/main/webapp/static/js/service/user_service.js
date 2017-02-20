@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp').factory('ActorService', ['$http', '$q', function($http, $q){
+angular.module('myApp').factory('ActorService', ['$http', '$q','$location',  function($http, $q, $location){
 
     var REST_SERVICE_URI = 'http://localhost:8000/Spring4MVCAngularJSExample/actor/';   
     
@@ -80,6 +80,7 @@ angular.module('myApp').factory('ActorService', ['$http', '$q', function($http, 
             .then(
             function (response) {
                 deferred.resolve(response.data);
+                $location.path('/ricerca');
             },
             function(errResponse){
                 console.error('Error while updating actor');

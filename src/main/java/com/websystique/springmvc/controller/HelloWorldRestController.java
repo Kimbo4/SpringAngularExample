@@ -1,7 +1,6 @@
 package com.websystique.springmvc.controller;
  
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -63,6 +62,7 @@ public class HelloWorldRestController {
 //            System.out.println("A User with name " + user.getUsername() + " already exist");
 //            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 //        }
+    	
     	Actor actorCriteria = new Actor();
     	actorCriteria.setFirst_name(actor.getFirst_name());
     	actorCriteria.setLast_name(actor.getLast_name());
@@ -85,10 +85,13 @@ public class HelloWorldRestController {
     	if(actor.isEmpty()){
             return new ResponseEntity<List<Actor>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
         }
+    	
+    	//Film prova = filmService.findById(actor.get(0).getFilms().iterator().next().getIdFilm());
+    	
         return new ResponseEntity<List<Actor>>(actor, HttpStatus.OK);
     }
 
-    //-------------------Search actor--------------------------------------------------------
+    //-------------------Search actor----------------------------------------------7----------
     
     @RequestMapping(value = "/findActor/", method = RequestMethod.POST)
     public ResponseEntity<List<Actor>> listUsers(@RequestBody Actor actor) {
@@ -104,16 +107,17 @@ public class HelloWorldRestController {
     
     @RequestMapping(value = "/actor/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Actor> getActor(@PathVariable("id") int id) {
-        Actor actor = 
-        actorService.findBySsn(id);
+    	
+        Actor actor = actorService.findBySsn(id);
+        
         if (actor == null) {
             System.out.println("Actor with id " + id + " not found");
             return new ResponseEntity<Actor>(HttpStatus.NOT_FOUND);
         }
-        Set<Film> setFilm = actor.getFilms();
-        List<Film> films = Arrays.asList(setFilm.toArray(new Film[0]));
-        actor.setFilm(films);
-
+        if(actor.getFilms()!=null);
+        Set<Film> setFilm = actor.getFilms(); 
+        List<Film> films = Arrays.asList(setFilm.toArray(new Film[0])); 
+        actor.setFilm(films); 
         return new ResponseEntity<Actor>(actor, HttpStatus.OK);
     }
      
@@ -135,13 +139,12 @@ public class HelloWorldRestController {
         Film films = new Film();
         films.setFilmName("lo squalo");
         films.setGenre("horror");
-        
+        films.setIdFilm(1);
         film.add(films);
         
         currentActor.setFirst_name(actor.getFirst_name());
         currentActor.setLast_name(actor.getLast_name());
         currentActor.setLast_update(new Timestamp(System.currentTimeMillis()));
-        currentActor.setFilms(film);
         actorService.updateActor(currentActor);
         return new ResponseEntity<Actor>(currentActor, HttpStatus.OK);
     }

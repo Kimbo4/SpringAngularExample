@@ -1,10 +1,9 @@
 'use strict';
 
 angular.module('myApp').controller('ActorController', ['$scope', 'ActorService', '$location', '$ngBootbox', function($scope, ActorService, $location, $ngBootbox) {
-    var self = this;
-    
+   
+	var self = this;
     self.film={idFilm:null, filmName:'', genre:'' };
-    var film=[];
     self.actor={actor_id:null, first_name:'',last_name:''};
     self.actors=[];
  
@@ -75,7 +74,8 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
     }
 
     function updateActor(actor, actor_id){
-    	ActorService.updateActor(actor, actor_id)
+    	self.film=$scope.ctrl.film;
+    	ActorService.updateActor(actor,actor_id)
             .then(
             fetchAllActors,
             function(errResponse){
@@ -102,7 +102,6 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
             updateActor(self.actor, self.actor.actor_id);
             console.log('User updated with id ', self.actor.actor_id);
         }
-        reset();
     }
 
     function edit(id){
@@ -120,7 +119,6 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
     	ActorService.details(idDet)
         .then(
         		function(response){
-        			self.actor.film=response.film;
         			self.actor=response;
         		}
             );
