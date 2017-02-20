@@ -30,8 +30,8 @@ public class Film implements java.io.Serializable {
 	private String filmName;
 	@Column(name="GENEREFILM")
 	private String genre;
-	@ManyToMany(mappedBy="films")
-	private Set<Actor> actor = new HashSet<Actor>(0);
+//	@ManyToMany(mappedBy="films")
+//	private Set<Actor> actor = new HashSet<Actor>(0);
 	
 	
 	public Integer getIdFilm() {
@@ -52,12 +52,12 @@ public class Film implements java.io.Serializable {
 	public void setGenre(String genre) {
 		this.genre = genre;
 	}
-	public Set<Actor> getActor() {
-		return actor;
-	}
-	public void setActor(Set<Actor> actor) {
-		this.actor = actor;
-	}
+//	public Set<Actor> getActor() {
+//		return actor;
+//	}
+//	public void setActor(Set<Actor> actor) {
+//		this.actor = actor;
+//	}
 
 	
 	

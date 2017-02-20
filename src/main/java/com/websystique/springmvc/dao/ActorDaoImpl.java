@@ -54,11 +54,11 @@ public class ActorDaoImpl extends AbstractDao implements ActorDao {
 		Criteria criteria = getSession().createCriteria(Actor.class);
 
 		if (actor.getFirst_name() != "") {
-			criteria.add(Restrictions.like("NOMEATTORE", "%" + actor.getFirst_name() + "%", MatchMode.ANYWHERE));
+			criteria.add(Restrictions.like("first_name", "%" + actor.getFirst_name() + "%", MatchMode.ANYWHERE));
 		}
 
 		if (actor.getLast_name() != "") {
-			criteria.add(Restrictions.like("COGNOMEATTORE", "%" + actor.getLast_name() + "%", MatchMode.ANYWHERE));
+			criteria.add(Restrictions.like("last_name", "%" + actor.getLast_name() + "%", MatchMode.ANYWHERE));
 		}
 
 		results = (List<Actor>) criteria.list();
