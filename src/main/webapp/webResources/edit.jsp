@@ -57,7 +57,7 @@
 							<div class="form-group col-md-12">
 								<label class="col-md-2 control-lable" for="file">Titolo</label>
 								<div class="col-md-7">
-									<input type=text name="titolo" ng-model="ctrl.film.filmName"
+									<input type=text name="newtitolo" ng-model="ctrl.film.filmName"
 										class="email form-control input-sm"
 										placeholder="Titolo"  />
 								</div>
@@ -67,7 +67,7 @@
 							<div class="form-group col-md-12">
 								<label class="col-md-2 control-lable" for="file">Genere</label>
 								<div class="col-md-7">
-									<input type=text name="genere" ng-model="ctrl.film.genre"
+									<input type=text name="newgenere" ng-model="ctrl.film.genre"
 										class="email form-control input-sm"
 										placeholder="Genere"  />
 								</div>

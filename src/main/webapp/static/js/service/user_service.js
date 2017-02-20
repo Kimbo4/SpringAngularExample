@@ -74,9 +74,9 @@ angular.module('myApp').factory('ActorService', ['$http', '$q','$location',  fun
     	return deferred.promise;
     }
 
-    function updateActor(actor, id) {
+    function updateActor(attorefilm, id) {
         var deferred = $q.defer();
-        $http.put(REST_SERVICE_URI+id, actor)
+        $http.put(REST_SERVICE_URI+id, attorefilm)
             .then(
             function (response) {
                 deferred.resolve(response.data);

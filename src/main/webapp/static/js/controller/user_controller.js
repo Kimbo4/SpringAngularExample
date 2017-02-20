@@ -3,9 +3,14 @@
 angular.module('myApp').controller('ActorController', ['$scope', 'ActorService', '$location', '$ngBootbox', function($scope, ActorService, $location, $ngBootbox) {
    
 	var self = this;
-    self.film={idFilm:null, filmName:'', genre:'' };
+	var film=null;
+	var actor=null;
+    self.film={idFilm:null, titolo:'', genere:'' };
     self.actor={actor_id:null, first_name:'',last_name:''};
     self.actors=[];
+    film=self.film;
+    actor=self.actor;
+	var attorefilm=null;
  
 
     self.bootbox=bootbox;
@@ -73,9 +78,9 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
         );
     }
 
-    function updateActor(actor, actor_id){
-    	self.film=$scope.ctrl.film;
-    	ActorService.updateActor(actor,actor_id)
+    function updateActor(actor, actor_id, film){
+    	attorefilm={film,actor};
+    	ActorService.updateActor(attorefilm,actor_id)
             .then(
             fetchAllActors,
             function(errResponse){
@@ -99,7 +104,8 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
             console.log('Saving New User', self.actor);
             createActor(self.actor);
         }else{
-            updateActor(self.actor, self.actor.actor_id);
+        	
+            updateActor(self.actor, self.actor.actor_id, self.film);
             console.log('User updated with id ', self.actor.actor_id);
         }
     }

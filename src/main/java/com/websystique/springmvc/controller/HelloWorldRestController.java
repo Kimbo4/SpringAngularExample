@@ -2,7 +2,6 @@ package com.websystique.springmvc.controller;
  
 import java.sql.Timestamp;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.websystique.springmvc.model.Actor;
+import com.websystique.springmvc.model.AttoreFilm;
 import com.websystique.springmvc.model.Film;
 import com.websystique.springmvc.service.ActorService;
 import com.websystique.springmvc.service.FilmService;
@@ -123,28 +123,31 @@ public class HelloWorldRestController {
      
     //------------------- Update actor --------------------------------------------------------
      
-    @RequestMapping(value = "/actor/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Actor> updateActor(@PathVariable("id") Integer id, @RequestBody Actor actor) {
+    @RequestMapping(value = "/actor/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Actor> updateActor(@PathVariable("id") Integer id, @RequestBody AttoreFilm attorefilm) {
         System.out.println("Updating User " + id);
+        
+        
          Actor currentActor = actorService.findBySsn(id);
          
         if (currentActor==null) {
             System.out.println("Actor with id " + id + " not found");
             return new ResponseEntity<Actor>(HttpStatus.NOT_FOUND);
         }
+
         
+        currentActor.getFilms().add(attorefilm.getFilm());
+        attorefilm.setAttore(currentActor);
         
-       Set<Film> film = new HashSet<Film>();
+//        
+//        Film films = new Film();
+//        films.setFilmName("prova 2");
+//        films.setGenre("horror");
         
-        Film films = new Film();
-        films.setFilmName("lo squalo");
-        films.setGenre("horror");
-        films.setIdFilm(1);
-        film.add(films);
-        
-        currentActor.setFirst_name(actor.getFirst_name());
-        currentActor.setLast_name(actor.getLast_name());
-        currentActor.setLast_update(new Timestamp(System.currentTimeMillis()));
+//        currentActor.setFirst_name(actor.getFirst_name());
+//        currentActor.setLast_name(actor.getLast_name());
+//        currentActor.setLast_update(new Timestamp(System.currentTimeMillis()));
+//        currentActor.getFilms().add(films);
         actorService.updateActor(currentActor);
         return new ResponseEntity<Actor>(currentActor, HttpStatus.OK);
     }
