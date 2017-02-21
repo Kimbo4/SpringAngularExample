@@ -30,7 +30,16 @@ public class ActorDaoImpl extends AbstractDao implements ActorDao {
 		
 		return (List<Actor>) criteria.list();
 	}
-
+	
+	public List<Actor> exist(Actor actor){
+		List<Actor> results = null;
+		Criteria criteria = getSession().createCriteria(Actor.class);
+		criteria.add(Restrictions.eq("first_name", actor.getFirst_name()));
+		criteria.add(Restrictions.eq("last_name", actor.getLast_name()));
+		results = (List<Actor>) criteria.list();
+		return results;
+	}
+	
 	public void deleteActorBySsn(long ssn) {
 		Query query = getSession().createSQLQuery("delete from attore where idATTORE = :ssn");
 		query.setLong("ssn", ssn);

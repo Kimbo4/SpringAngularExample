@@ -19,4 +19,5 @@ public interface ActorDao {
     
     List <Actor> findActors(Actor actor);
 
+	public List<Actor> exist(Actor actor);
 }

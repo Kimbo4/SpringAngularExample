@@ -16,4 +16,6 @@ public interface ActorService {
     Actor findBySsn(Integer ssn);
      
     void updateActor(Actor actor);
+    
+	public List<Actor> exist(Actor actor);
 }

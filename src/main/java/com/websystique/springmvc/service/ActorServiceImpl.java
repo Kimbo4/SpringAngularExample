@@ -53,5 +53,7 @@ public class ActorServiceImpl implements ActorService {
 		return actorDao.findActors(actor);
 	}
 
-
+	public List<Actor> exist(Actor actor){
+		return actorDao.exist(actor);
+	}
 }

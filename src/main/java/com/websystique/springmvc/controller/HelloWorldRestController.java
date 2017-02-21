@@ -58,11 +58,14 @@ public class HelloWorldRestController {
     @RequestMapping(value = "/actor/", method = RequestMethod.POST)
     public ResponseEntity<Void> createActor(@RequestBody Actor actor,    UriComponentsBuilder ucBuilder)  {
         
-//        if (acto.isUserExist(user)) {
-//            System.out.println("A User with name " + user.getUsername() + " already exist");
-//            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-//        }
+    	//TODO controllo utente già esistente
     	
+    	if (actorService.exist(actor).size() > 0){
+          System.out.println("Attore con questo nome già esistente");
+          return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+   		
+    	}
+   	
     	Actor actorCriteria = new Actor();
     	actorCriteria.setFirst_name(actor.getFirst_name());
     	actorCriteria.setLast_name(actor.getLast_name());
@@ -86,7 +89,6 @@ public class HelloWorldRestController {
             return new ResponseEntity<List<Actor>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
         }
     	
-    	//Film prova = filmService.findById(actor.get(0).getFilms().iterator().next().getIdFilm());
     	
         return new ResponseEntity<List<Actor>>(actor, HttpStatus.OK);
     }
@@ -114,6 +116,7 @@ public class HelloWorldRestController {
             System.out.println("Actor with id " + id + " not found");
             return new ResponseEntity<Actor>(HttpStatus.NOT_FOUND);
         }
+        
         if(actor.getFilms()!=null);
         Set<Film> setFilm = actor.getFilms(); 
         List<Film> films = Arrays.asList(setFilm.toArray(new Film[0])); 
@@ -127,27 +130,18 @@ public class HelloWorldRestController {
     public ResponseEntity<Actor> updateActor(@PathVariable("id") Integer id, @RequestBody AttoreFilm attorefilm) {
         System.out.println("Updating User " + id);
         
-        
          Actor currentActor = actorService.findBySsn(id);
-         
         if (currentActor==null) {
             System.out.println("Actor with id " + id + " not found");
             return new ResponseEntity<Actor>(HttpStatus.NOT_FOUND);
         }
 
-        
         currentActor.getFilms().add(attorefilm.getFilm());
-        attorefilm.setAttore(currentActor);
         
-//        
-//        Film films = new Film();
-//        films.setFilmName("prova 2");
-//        films.setGenre("horror");
-        
-//        currentActor.setFirst_name(actor.getFirst_name());
-//        currentActor.setLast_name(actor.getLast_name());
-//        currentActor.setLast_update(new Timestamp(System.currentTimeMillis()));
-//        currentActor.getFilms().add(films);
+        currentActor.setFirst_name(attorefilm.getActor().getFirst_name());
+        currentActor.setLast_name(attorefilm.getActor().getLast_name());
+        currentActor.setLast_update(new Timestamp(System.currentTimeMillis()));
+
         actorService.updateActor(currentActor);
         return new ResponseEntity<Actor>(currentActor, HttpStatus.OK);
     }
@@ -157,14 +151,14 @@ public class HelloWorldRestController {
     //------------------- Delete a User --------------------------------------------------------
      
     @RequestMapping(value = "/actor/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Actor> deleteActor(@PathVariable("id") long id) {
+    public ResponseEntity<Actor> deleteActor(@PathVariable("id") int id) {
         System.out.println("Fetching & Deleting User with id " + id);
         
-//        Actor actor = actorService.findById(id);
-//        if (user == null) {
-//            System.out.println("Unable to delete. User with id " + id + " not found");
-//            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-//        }
+        Actor actor = actorService.findBySsn(id);
+        if (actor == null) {
+            System.out.println("Unable to delete. User with id " + id + " not found");
+            return new ResponseEntity<Actor>(HttpStatus.NOT_FOUND);
+        }
  
         actorService.deleteActorBySsn(id);
         return new ResponseEntity<Actor>(HttpStatus.NO_CONTENT);

@@ -79,7 +79,7 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
     }
 
     function updateActor(actor, actor_id, film){
-    	attorefilm={film,actor};
+    	attorefilm={actor,film};
     	ActorService.updateActor(attorefilm,actor_id)
             .then(
             fetchAllActors,

@@ -5,10 +5,10 @@ public class AttoreFilm {
 	private Actor actor;
 	private Film film;
 	
-	public Actor getAttore() {
+	public Actor getActor() {
 		return actor;
 	}
-	public void setAttore(Actor actor) {
+	public void setActor(Actor actor) {
 		this.actor = actor;
 	}
 	public Film getFilm() {
