@@ -7,8 +7,8 @@ import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import com.websystique.springmvc.model.Actor;
 import com.websystique.springmvc.model.Film;
+import com.websystique.springmvc.model.Genere;
 
 @Repository("filmDao")
 public class FilmDaoImpl extends AbstractDao implements FilmDao {
@@ -21,6 +21,12 @@ public class FilmDaoImpl extends AbstractDao implements FilmDao {
 	@Override
 	public List<Film> findAllFilm() {
 		Criteria criteria = getSession().createCriteria(Film.class);
+		return criteria.list();
+	}
+	
+	@Override
+	public List<Genere> findAllGenere() {
+		Criteria criteria = getSession().createCriteria(Genere.class);
 		return criteria.list();
 	}
 

@@ -3,19 +3,16 @@ package com.websystique.springmvc.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 
 @Entity
@@ -28,10 +25,9 @@ public class Film implements java.io.Serializable {
 	private Integer idFilm;
 	@Column(name = "TITOLOFILM")
 	private String filmName;
-	@Column(name="GENEREFILM")
-	private String genre;
-//	@ManyToMany(mappedBy="films")
-//	private Set<Actor> actor = new HashSet<Actor>(0);
+	@ManyToOne
+	@JoinColumn(name="GENEREFILM")
+	private Genere genre;
 	
 	
 	public Integer getIdFilm() {
@@ -46,19 +42,11 @@ public class Film implements java.io.Serializable {
 	public void setFilmName(String filmName) {
 		this.filmName = filmName;
 	}
-	public String getGenre() {
+	public Genere getGenre() {
 		return genre;
 	}
-	public void setGenre(String genre) {
+	public void setGenre(Genere genre) {
 		this.genre = genre;
 	}
-//	public Set<Actor> getActor() {
-//		return actor;
-//	}
-//	public void setActor(Set<Actor> actor) {
-//		this.actor = actor;
-//	}
-
-	
 	
 }

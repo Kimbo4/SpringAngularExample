@@ -4,7 +4,16 @@ public class AttoreFilm {
 
 	private Actor actor;
 	private Film film;
+	private String genere;
 	
+	
+	
+	public String getGenere() {
+		return genere;
+	}
+	public void setGenere(String genere) {
+		this.genere = genere;
+	}
 	public Actor getActor() {
 		return actor;
 	}

@@ -3,6 +3,7 @@ package com.websystique.springmvc.service;
 import java.util.List;
 
 import com.websystique.springmvc.model.Film;
+import com.websystique.springmvc.model.Genere;
 
 public interface FilmService {
 	
@@ -17,4 +18,7 @@ public interface FilmService {
     Film findById(Integer id);
      
     void updateFilm(Film film);
+    
+	public List<Genere> findAllGenere();
+
 }

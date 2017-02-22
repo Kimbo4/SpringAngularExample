@@ -10,11 +10,44 @@ angular.module('myApp').factory('ActorService', ['$http', '$q','$location',  fun
             updateActor:updateActor,
             deleteActor:deleteActor,
             details:details,
-            findActor:findActor
+            findActor:findActor,
+            findAllFilm:findAllFilm,
+            findAllGenere:findAllGenere
         };
 
     return factory;
 
+    function findAllGenere(){
+    	
+    	var deferred = $q.defer();
+    	$http.get('http://localhost:8000/Spring4MVCAngularJSExample/genere/').then(
+    			function (response){
+    				deferred.resolve(response.data);
+    			},
+    			function(errResponse){
+    				console.error('Errore durante la ricerca dei generi');
+    				deferred.reject(errResponse);
+    			}
+    	);
+    	return deferred.promise;
+    	
+    }
+    
+    function findAllFilm(){
+    	
+    	var deferred = $q.defer();
+    	$http.get('http://localhost:8000/Spring4MVCAngularJSExample/film/').then(
+    			function (response){
+    				deferred.resolve(response.data);
+    			},
+    			function(errResponse){
+    				console.error('Errore durante la ricerca dei film');
+    				deferred.reject(errResponse);
+    			}
+    	);
+    	return deferred.promise;
+    }
+    
     function findActor(actor){
         var deferred = $q.defer();
         $http.post('http://localhost:8000/Spring4MVCAngularJSExample/findActor/',actor)

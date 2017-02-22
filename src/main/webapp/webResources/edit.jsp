@@ -52,28 +52,30 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="row" ng-show="insertFilm">
 							<div class="form-group col-md-12">
 								<label class="col-md-2 control-lable" for="file">Titolo</label>
 								<div class="col-md-7">
 									<input type=text name="newtitolo" ng-model="ctrl.film.filmName"
-										class="email form-control input-sm"
-										placeholder="Titolo"  />
-								</div>
-							</div>
-						</div>						
-					<div class="row" ng-show="insertFilm">
-							<div class="form-group col-md-12">
-								<label class="col-md-2 control-lable" for="file">Genere</label>
-								<div class="col-md-7">
-									<input type=text name="newgenere" ng-model="ctrl.film.genre"
-										class="email form-control input-sm"
-										placeholder="Genere"  />
+										class="email form-control input-sm" placeholder="Titolo" />
 								</div>
 							</div>
 						</div>
-
+						<div class="row" ng-show="insertFilm">
+							<div class="form-group col-md-12">
+								<label class="col-md-2 control-lable" for="file">Genere</label>
+								<div class="col-md-7">
+									<select class="form-control" name="repeatSelect" id="repeatSelect"
+										ng-model="ctrl.genere">
+										<option ng-repeat="option in ctrl.generes"
+											value="{{option.idGenere}}">{{option.genere}}</option>
+									</select>
+								
+								</div>
+							</div>
+						</div>
+	
 						<div class="row">
 							<div class="form-actions floatRight">
 
@@ -84,16 +86,11 @@
 								<input type="submit" value="Modifica"
 									class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
 
-								<%--                                 <button type="button" class="btn btn-primary btn-sm" 
-                                ng-bootbox-class-name=" col-md-12"
-                                ng-bootbox-confirm-action="confirmCallbackMethod(attr1, attr2)"
-                                 ng-bootbox-alert="<embed src='webResources/newFilm.jsp' 
-                                 />">
-                                Assegna film</button> --%>
-
 								<button class="btn btn-primary btn-sm" type="button"
 									ng-click="insertFilm=true">Assegna film</button>
-
+						
+						
+					
 
 							</div>
 						</div>
@@ -117,7 +114,7 @@
 							<tr ng-repeat="u in ctrl.actor.film">
 								<td><span ng-bind="u.idFilm"></span></td>
 								<td><span ng-bind="u.filmName"></span></td>
-								<td><span ng-bind="u.genre"></span></td>
+								<td><span ng-bind="u.genre.genere"></span></td>
 							</tr>
 						</tbody>
 					</table>

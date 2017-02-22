@@ -13,7 +13,8 @@
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootbox.min.js"></script>
 <script src="bower_components/ngBootbox/dist/ngBootbox.js"></script>
-<script src="bower_components/c3-0.4.11/c3.min.js"></script>
+<script src="bower_components/c3/c3.min.js"></script>
+<script src="bower_components/d3/d3.min.js"></script>
 
 <script src="static/js/app.js"></script>
 <script src="static/js/service/user_service.js"></script>
@@ -28,7 +29,7 @@
 <link rel="stylesheet"
 	href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" />
 	
-<link href="bower_components/c3-0.4.11/c3.css" rel="stylesheet" type="text/css">	
+<link href="bower_components/c3/c3.css" rel="stylesheet" type="text/css">	
 	
 	
 </head>
@@ -38,7 +39,7 @@
 	
 </script>
 <body ng-app="myApp" class="ng-cloak">
-	<div class="generic-container" ng-controller="ActorController as ctrl">
+	<div class="generic-container" ng-controller="ActorController as ctrl" ng-init="showGraph()">
 
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
@@ -55,8 +56,12 @@
 			</div>
 		</nav>
 	</div>
-	<div ng-view></div>
-
+	
+	
+	<div id="chart" style="width: 30%; float:right"></div>
+	
+	<div ng-view style="width:70%;float:left"></div>
+		
 </body>
 
 </html>

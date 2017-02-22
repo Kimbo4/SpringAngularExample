@@ -20,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.websystique.springmvc.model.Actor;
 import com.websystique.springmvc.model.AttoreFilm;
 import com.websystique.springmvc.model.Film;
+import com.websystique.springmvc.model.Genere;
 import com.websystique.springmvc.service.ActorService;
 import com.websystique.springmvc.service.FilmService;
  
@@ -33,16 +34,29 @@ public class HelloWorldRestController {
     @Autowired
     FilmService filmService;
     
+    
+    //-------------------Retrieve all genere--------------------------------------------------------
+    
+    @RequestMapping(value = "/genere/", method = RequestMethod.GET)
+    public ResponseEntity<List<Genere>> getGenere(   UriComponentsBuilder ucBuilder)  {
+        
+    	
+      	List<Genere> genere=filmService.findAllGenere();       
+      	
+    	if(genere.isEmpty()){
+        
+    		return new ResponseEntity<List<Genere>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+        }
+    	
+        return new ResponseEntity<List<Genere>>(genere, HttpStatus.OK);
+   
+      }
+ 
     //-------------------Retrieve film--------------------------------------------------------
     
     @RequestMapping(value = "/film/", method = RequestMethod.GET)
     public ResponseEntity<List<Film>> getFilms(   UriComponentsBuilder ucBuilder)  {
         
-//        if (acto.isUserExist(user)) {
-//            System.out.println("A User with name " + user.getUsername() + " already exist");
-//            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-//        }
-    	
     	
       	List<Film> film=filmService.findAllFilm();       
     	if(film.isEmpty()){
@@ -112,6 +126,7 @@ public class HelloWorldRestController {
     	
         Actor actor = actorService.findBySsn(id);
         
+        
         if (actor == null) {
             System.out.println("Actor with id " + id + " not found");
             return new ResponseEntity<Actor>(HttpStatus.NOT_FOUND);
@@ -135,8 +150,16 @@ public class HelloWorldRestController {
             System.out.println("Actor with id " + id + " not found");
             return new ResponseEntity<Actor>(HttpStatus.NOT_FOUND);
         }
-
-        currentActor.getFilms().add(attorefilm.getFilm());
+        
+        
+        Genere genere = new Genere();
+        genere.setIdGenere(Integer.parseInt(attorefilm.getGenere()));
+        Film film = new Film();
+        film.setFilmName(attorefilm.getFilm().getFilmName());
+        
+        film.setGenre(genere);
+        
+        currentActor.getFilms().add(film);
         
         currentActor.setFirst_name(attorefilm.getActor().getFirst_name());
         currentActor.setLast_name(attorefilm.getActor().getLast_name());

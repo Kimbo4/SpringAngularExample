@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.websystique.springmvc.dao.FilmDao;
 import com.websystique.springmvc.model.Film;
+import com.websystique.springmvc.model.Genere;
 
 
 @Service("filmService")
@@ -47,6 +48,11 @@ public class FilmServiceImpl implements FilmService {
 	@Override
 	public void updateFilm(Film film) {
 		filmDao.updateFilm(film);
+	}
+
+	@Override
+	public List<Genere> findAllGenere() {
+		return filmDao.findAllGenere();
 	}
 
 }

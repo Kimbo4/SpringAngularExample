@@ -5,8 +5,11 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
 	var self = this;
 	var film=null;
 	var actor=null;
+	
     self.film={idFilm:null, titolo:'', genere:'' };
     self.actor={actor_id:null, first_name:'',last_name:''};
+    self.genere={idGenere:null,genere:''}
+    self.generes=[];
     self.actors=[];
     film=self.film;
     actor=self.actor;
@@ -24,7 +27,61 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
     self.inserisciFilmm = inserisciFilm;
     
     var idDet = $location.search();
+   	var horror = 0;
+   	var commedia = 0;
+   	var azione = 0;
+    
+    $scope.chart = null;
+    
+    $scope.showGraph = function() {
+    	
+ 
+    	
+    	ActorService.findAllFilm().then(
+    			
+       		 function(response){
+       			 
 
+       	    	
+       			 for(var i = 0; i<response.length;i++){
+       				 
+       				if (response[i].genre.genere === 'Horror'){
+       					horror++;
+       				}
+      				if (response[i].genre.genere === 'Fantasy'){
+       					commedia++;
+       				}
+      				if (response[i].genre.genere === 'Azione'){
+       					azione++;
+       				}
+       			 }
+       	        $scope.chart = c3.generate({
+                    bindto: '#chart',
+                    
+                    data: {
+                      columns: [
+                        ['Fantasy', commedia],
+                        ['Horror', horror],
+                        ['Azione', azione]
+                      ],
+                      type: 'bar'
+                    }
+                   
+                }); 
+    		 },
+    		 
+    		 function(responseError){
+    			 bootbox.alert("Nessun risultato trovato");
+    		 }
+    	
+    	);
+    	
+
+        console.log(commedia); 
+
+        
+    }
+    
 	function bootbox(){
     	$ngBootbox.alert("<embed src='webResources/newFilm.jsp'/>").then(function(result) {
             console.log('Alert closed');
@@ -78,8 +135,8 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
         );
     }
 
-    function updateActor(actor, actor_id, film){
-    	attorefilm={actor,film};
+    function updateActor(actor, actor_id, film,genere){
+    	attorefilm={actor,film,genere};
     	ActorService.updateActor(attorefilm,actor_id)
             .then(
             fetchAllActors,
@@ -87,6 +144,7 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
                 console.error('Error while updating User');
             }
         );
+    	 $scope.showGraph();
     }
 
     function deleteActor(actor_id){
@@ -97,6 +155,7 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
                 console.error('Error while deleting User');
             }
         );
+    	 $scope.showGraph();
     }
 
     function submit() {
@@ -105,7 +164,7 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
             createActor(self.actor);
         }else{
         	
-            updateActor(self.actor, self.actor.actor_id, self.film);
+            updateActor(self.actor, self.actor.actor_id, self.film, self.genere);
             console.log('User updated with id ', self.actor.actor_id);
         }
     }
@@ -125,15 +184,24 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
     	ActorService.details(idDet)
         .then(
         		function(response){
+        			
         			self.actor=response;
         		}
             );
+   	ActorService.findAllGenere().then(
+    			
+    			function(response){
+    				self.generes=response;
+    			}
+    	);
+    	
     	console.log('ho chiamato il metodo del dettaglio');
     }
     
     function remove(actor_id){
         console.log('id to be deleted', actor_id);
-        if(self.actor.actor_id === actor_id) {//clean form if the user to be deleted is shown there.
+        if(self.actor.actor_id === actor_id) {// clean form if the user to be
+												// deleted is shown there.
             reset();
         }
         deleteActor(actor_id);
@@ -142,7 +210,7 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
 
     function reset(){
         self.actor={actor_id:null,first_name:'',last_name:''};
-        $scope.myForm.$setPristine(); //reset Form
+        $scope.myForm.$setPristine(); // reset Form
     }
 
 }]);
