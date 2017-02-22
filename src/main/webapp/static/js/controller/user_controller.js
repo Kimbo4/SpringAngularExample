@@ -30,39 +30,54 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
    	var horror = 0;
    	var commedia = 0;
    	var azione = 0;
+   	var fantasy = 0;
+   	var thriller = 0;
+   	var giallo = 0;
+   	
     
     $scope.chart = null;
     
     $scope.showGraph = function() {
     	
- 
-    	
     	ActorService.findAllFilm().then(
     			
        		 function(response){
-       			 
-
-       	    	
        			 for(var i = 0; i<response.length;i++){
-       				 
-       				if (response[i].genre.genere === 'Horror'){
-       					horror++;
-       				}
-      				if (response[i].genre.genere === 'Fantasy'){
-       					commedia++;
-       				}
-      				if (response[i].genre.genere === 'Azione'){
-       					azione++;
-       				}
-       			 }
+       		        switch (response[i].genre.idGenere) {
+       	            case 1:
+       	            	horror++;
+       	            	break;
+       	            case 2:
+       	            	commedia++;
+       	            	break;
+       	            case 3:
+       	            	azione++;
+       	            	break;
+       	            case 4:
+       	            	fantasy++;
+       	            	break;
+       	            case 5:
+       	            	giallo++;
+       	            	break;
+       	            case 6:
+       	            	thriller++;
+       	            	break;
+
+       		        }
+       	        }
+
+       			 
        	        $scope.chart = c3.generate({
                     bindto: '#chart',
                     
                     data: {
                       columns: [
-                        ['Fantasy', commedia],
+                        ['Commedia', commedia],
                         ['Horror', horror],
-                        ['Azione', azione]
+                        ['Azione', azione],
+                        ['Fantasy', fantasy],
+                        ['Thriller', thriller],
+                        ['Giallo', giallo]
                       ],
                       type: 'bar'
                     }
@@ -71,15 +86,11 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
     		 },
     		 
     		 function(responseError){
-    			 bootbox.alert("Nessun risultato trovato");
+    			 $ngBootbox.alert("Nessun risultato trovato");
     		 }
     	
     	);
-    	
 
-        console.log(commedia); 
-
-        
     }
     
 	function bootbox(){
@@ -106,19 +117,19 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
             			 self.actors=response;
             		 },
             		 function(responseError){
-            			 bootbox.alert("Nessun risultato trovato");
+            			 $ngBootbox.alert("Nessun risultato trovato");
             		 }
              )
         }else{
         	 ActorService.findActor(self.actor).
              then(
-            		 
             		 function(response){
             			 
             			 self.actors=response;
+            		 },
+            		 function(responseError){
+            			 $ngBootbox.alert("Nessun risultato trovato");
             		 }
-            		 
-             
              );
         }
         reset();
@@ -139,12 +150,17 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
     	attorefilm={actor,film,genere};
     	ActorService.updateActor(attorefilm,actor_id)
             .then(
-            fetchAllActors,
+           
+           function(){
+        	   $scope.showGraph();
+        	   fetchAllActors();
+           },
             function(errResponse){
                 console.error('Error while updating User');
             }
+           
         );
-    	 $scope.showGraph();
+    	 
     }
 
     function deleteActor(actor_id){
@@ -155,7 +171,6 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
                 console.error('Error while deleting User');
             }
         );
-    	 $scope.showGraph();
     }
 
     function submit() {
@@ -200,8 +215,7 @@ angular.module('myApp').controller('ActorController', ['$scope', 'ActorService',
     
     function remove(actor_id){
         console.log('id to be deleted', actor_id);
-        if(self.actor.actor_id === actor_id) {// clean form if the user to be
-												// deleted is shown there.
+        if(self.actor.actor_id === actor_id) {
             reset();
         }
         deleteActor(actor_id);
